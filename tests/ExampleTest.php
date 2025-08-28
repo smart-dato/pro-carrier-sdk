@@ -46,6 +46,7 @@ it('Parcel#1 - Robin Bassford (US)', function () {
         ->manufacturer(
             code: '123',
             company: 'Suzhou Longxin Gloves Co Ltd',
+            address1: 'UNIT 1 JUNIPER PARK,Fenton Way',
             zip: '0000',
             city: 'Suzhou',
             state: 'Jiangsu',
@@ -84,7 +85,7 @@ it('Parcel#1 - Robin Bassford (US)', function () {
         ->description('Acle WR Nano Fleece Glove M Navy')
         ->customsDuty('DDP')
         ->declarationType('SaleOfGoods')
-        ->references('LaravelPlugin - ProCarrier - OmestParcel#1')
+        ->references('LaravelPlugin - ProCarrier - OmestParcel#1 - '.Str::uuid()->toString())
         ->requireCarrierTrackingNumber(true)
         ->labelOptions('System', 'PDF')
         ->build();
@@ -92,6 +93,7 @@ it('Parcel#1 - Robin Bassford (US)', function () {
     $response = $this->service->createShipment($shipment);
 
     ray($response);
+    file_put_contents('label'.now()->format('ymdhis').'.pdf', base64_decode($response->labelImage));
     expect(true)->toBeTrue();
 });
 
@@ -171,7 +173,7 @@ it('Parcel#2 - Hilton Guam Resort & Spa (Guam)', function () {
         ->description('Anmer Waterproof All Weather Ultra Grip Knitted Glove')
         ->customsDuty('DDP')
         ->declarationType('SaleOfGoods')
-        ->references('LaravelPlugin - ProCarrier - OmestParcel#2')
+        ->references('LaravelPlugin - ProCarrier - OmestParcel#2 - '.Str::uuid()->toString())
         ->requireCarrierTrackingNumber(true)
         ->labelOptions('System', 'PDF')
         ->build();
@@ -255,7 +257,7 @@ it('Parcel#3 - Kensington Hotel Saipan (Northern Mariana Islands)', function () 
         ->description('Beetley WP AW Head Gaitor L/XL Black')
         ->customsDuty('DDP')
         ->declarationType('SaleOfGoods')
-        ->references('LaravelPlugin - ProCarrier - OmestParcel#3')
+        ->references('LaravelPlugin - ProCarrier - OmestParcel#3 - '.Str::uuid()->toString())
         ->requireCarrierTrackingNumber(true)
         ->labelOptions('System', 'PDF')
         ->build();

@@ -25,8 +25,11 @@ class ProCarrierConnector extends Connector
     public function resolveBaseUrl(): string
     {
         $baseUrl = $this->url;
+        ray($this->testMode);
         if ($this->testMode) {
             $baseUrl .= '?testMode=1';
+        }else{
+            $baseUrl .= '?testMode=0';
         }
 
         return $baseUrl;
