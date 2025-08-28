@@ -35,8 +35,7 @@ class ProCarrier
 
     /**
      * Create a new shipment
-     * @param  ShipmentData  $shipmentData
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -51,11 +50,7 @@ class ProCarrier
 
     /**
      * Get shipment label
-     * @param  string  $trackingNumber
-     * @param  string  $shipperReference
-     * @param  string  $labelFormat
-     * @param  string  $labelOption
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -78,10 +73,7 @@ class ProCarrier
 
     /**
      * Get shipment invoice
-     * @param  string  $trackingNumber
-     * @param  string  $shipperReference
-     * @param  string  $labelFormat
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -104,9 +96,7 @@ class ProCarrier
 
     /**
      * Cancel/void a shipment
-     * @param  string  $trackingNumber
-     * @param  string  $shipperReference
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -127,9 +117,7 @@ class ProCarrier
 
     /**
      * Track a shipment
-     * @param  string  $trackingNumber
-     * @param  string  $shipperReference
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -150,8 +138,7 @@ class ProCarrier
 
     /**
      * Create a parcel group
-     * @param  GroupData  $groupData
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -166,8 +153,7 @@ class ProCarrier
 
     /**
      * Cancel a parcel group
-     * @param  string  $carrierId
-     * @return ApiResponseData
+     *
      * @throws ProCarrierException
      * @throws ProCarrierFatalRequestException
      * @throws ProCarrierJsonRequestException
@@ -179,7 +165,6 @@ class ProCarrier
             new CancelParcelGroupRequest($this->apiKey, $carrierId)
         );
     }
-
 
     /**
      * @throws ProCarrierFatalRequestException

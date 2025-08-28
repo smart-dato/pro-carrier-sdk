@@ -11,7 +11,7 @@ use SmartDato\ProCarrier\Data\GroupData;
 /**
  * Create Parcel Group Request
  */
-class CreateParcelGroupRequest extends Request  implements HasBody
+class CreateParcelGroupRequest extends Request implements HasBody
 {
     use HasJsonBody;
 

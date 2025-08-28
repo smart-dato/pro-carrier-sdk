@@ -20,8 +20,7 @@ class VoidShipmentRequest extends Request implements HasBody
         protected string $apiKey,
         protected string $trackingNumber = '',
         protected string $shipperReference = ''
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

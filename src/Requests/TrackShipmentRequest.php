@@ -10,7 +10,7 @@ use Saloon\Traits\Body\HasJsonBody;
 /**
  * Track Shipment Request
  */
-class TrackShipmentRequest extends Request  implements HasBody
+class TrackShipmentRequest extends Request implements HasBody
 {
     use HasJsonBody;
 

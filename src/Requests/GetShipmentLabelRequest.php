@@ -10,7 +10,7 @@ use Saloon\Traits\Body\HasJsonBody;
 /**
  * Get Shipment Label Request
  */
-class GetShipmentLabelRequest extends Request  implements HasBody
+class GetShipmentLabelRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
