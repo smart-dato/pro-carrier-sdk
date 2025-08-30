@@ -28,7 +28,7 @@ class ProCarrierConnector extends Connector
         ray($this->testMode);
         if ($this->testMode) {
             $baseUrl .= '?testMode=1';
-        }else{
+        } else {
             $baseUrl .= '?testMode=0';
         }
 
