@@ -30,7 +30,8 @@ class ApiResponseData
         public float $weight = 0.0,
         public string $weightUnit = '',
         public ?AddressData $consigneeAddress = null,
-        public array $events = []
+        public array $events = [],
+        public string $data = '', // Raw response data (for debugging purposes)
     ) {
         $this->consigneeAddress = $consigneeAddress ?? new AddressData('', '', '', '');
     }
@@ -50,7 +51,7 @@ class ApiResponseData
         return $this->errorLevel === 10;
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data, ?string $raw = null): self
     {
         $consigneeAddress = null;
         if (isset($data['Shipment']['ConsigneeAddress'])) {
@@ -97,7 +98,8 @@ class ApiResponseData
             weight: (float) ($shipment['Weight'] ?? 0.0),
             weightUnit: $shipment['WeightUnit'] ?? '',
             consigneeAddress: $consigneeAddress,
-            events: $events
+            events: $events,
+            data: $raw,
         );
     }
 }

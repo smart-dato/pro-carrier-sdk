@@ -181,7 +181,10 @@ class ProCarrier
                 throw new ProCarrierException($response->json('Error').' ('.$response->json('ErrorLevel').')');
             }
 
-            return ApiResponseData::fromArray($data);
+            return ApiResponseData::fromArray(
+                $data,
+                raw: $response->body()
+            );
         } catch (FatalRequestException $e) {
             throw new ProCarrierFatalRequestException($e->getMessage());
         } catch (RequestException $e) {

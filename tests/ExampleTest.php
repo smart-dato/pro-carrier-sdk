@@ -1,6 +1,7 @@
 <?php
 
 use SmartDato\ProCarrier\Builders\AddressBuilder;
+use SmartDato\ProCarrier\Builders\GroupBuilder;
 use SmartDato\ProCarrier\Builders\ProductBuilder;
 use SmartDato\ProCarrier\Builders\ShipmentBuilder;
 use SmartDato\ProCarrier\Enums\ServiceCode;
@@ -90,7 +91,7 @@ it('Parcel#1 - Robin Bassford (US)', function () {
         ->labelOptions('System', 'PDF')
         ->build();
 
-    $response = $this->service->createShipment($shipment);
+    $response = $response = $this->service->createShipment($shipment);
 
     ray($response);
     file_put_contents('label'.now()->format('ymdhis').'.pdf', base64_decode($response->labelImage));
@@ -178,7 +179,7 @@ it('Parcel#2 - Hilton Guam Resort & Spa (Guam)', function () {
         ->labelOptions('System', 'PDF')
         ->build();
 
-    $this->service->createShipment($shipment);
+    $response = $this->service->createShipment($shipment);
     expect(true)->toBeTrue();
 });
 
@@ -262,6 +263,19 @@ it('Parcel#3 - Kensington Hotel Saipan (Northern Mariana Islands)', function () 
         ->labelOptions('System', 'PDF')
         ->build();
 
-    $this->service->createShipment($shipment);
+    $response = $this->service->createShipment($shipment);
+    ray($response);
+
+    expect(true)->toBeTrue();
+});
+
+it('create parel group', function () {
+    $response = $this->service->createParcelGroup(GroupBuilder::create()
+        ->addTrackingNumber('DG32733000013')
+//        ->addTrackingNumber('DG46666000162')
+        ->labelFormat('PDF')
+        ->build());
+    ray($response);
+
     expect(true)->toBeTrue();
 });
