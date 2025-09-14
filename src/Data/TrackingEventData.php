@@ -11,7 +11,7 @@ class TrackingEventData
         public string $dateTime,
 
         public string $country,
-        public int $code,
+        public string $code,
         public string $description,
         public string $carrierCode = '',
         public string $carrierDescription = ''
@@ -34,7 +34,7 @@ class TrackingEventData
         return new self(
             dateTime: $data['DateTime'] ?? '',
             country: $data['Country'] ?? '',
-            code: (int) ($data['Code'] ?? 0),
+            code: $data['Code'] ?? '',
             description: $data['Description'] ?? '',
             carrierCode: $data['CarrierCode'] ?? '',
             carrierDescription: $data['CarrierDescription'] ?? ''
