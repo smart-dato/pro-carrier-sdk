@@ -2,6 +2,14 @@
 
 All notable changes to `pro-carrier-sdk` will be documented in this file.
 
+## 0.0.7 - 2026-01-14
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/smart-dato/pro-carrier-sdk/pull/4
+
+**Full Changelog**: https://github.com/smart-dato/pro-carrier-sdk/compare/0.0.6...0.0.7
+
 ## 0.0.6 - 2025-09-14
 
 **Full Changelog**: https://github.com/smart-dato/pro-carrier-sdk/compare/0.0.5...0.0.6
