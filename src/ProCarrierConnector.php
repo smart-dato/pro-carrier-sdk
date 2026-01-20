@@ -12,20 +12,27 @@ class ProCarrierConnector extends Connector
 {
     use AcceptsJson;
 
-    protected bool $testMode;
+    protected ?bool $testMode;
 
     private string $url;
 
-    public function __construct(?bool $testMode = null, ?string $url = null)
+    public function __construct(?bool $testMode = null, ?string $url = null, bool $skipTestOption = false)
     {
         $this->testMode = $testMode ?? config('pro-carrier-sdk.test_mode', false);
         $this->url = $url ?? config('pro-carrier-sdk.base_url');
+        if ($skipTestOption) {
+            $this->testMode = null;
+        }
     }
 
     public function resolveBaseUrl(): string
     {
         $baseUrl = $this->url;
-        ray($this->testMode);
+
+        if ($this->testMode === null) {
+            return $baseUrl;
+        }
+
         if ($this->testMode) {
             $baseUrl .= '?testMode=1';
         } else {

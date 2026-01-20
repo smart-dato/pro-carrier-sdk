@@ -27,10 +27,13 @@ class ProCarrier
 
     protected string $apiKey;
 
-    public function __construct(?string $apiKey = null, bool $testMode = false)
+    public function __construct(?string $apiKey = null, bool $testMode = false, bool $skipTestOption = false)
     {
         $this->apiKey = $apiKey ?? config('pro-carrier-sdk.api_key');
-        $this->connector = new ProCarrierConnector($testMode);
+        $this->connector = new ProCarrierConnector(
+            testMode: $testMode,
+            skipTestOption: $skipTestOption
+        );
     }
 
     /**
