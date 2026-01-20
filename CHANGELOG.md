@@ -2,6 +2,10 @@
 
 All notable changes to `pro-carrier-sdk` will be documented in this file.
 
+## 0.0.9 - 2026-01-20
+
+**Full Changelog**: https://github.com/smart-dato/pro-carrier-sdk/compare/0.0.8...0.0.9
+
 ## 0.0.8 - 2026-01-20
 
 **Full Changelog**: https://github.com/smart-dato/pro-carrier-sdk/compare/0.0.7...0.0.8
