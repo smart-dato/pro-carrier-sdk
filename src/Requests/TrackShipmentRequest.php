@@ -24,7 +24,7 @@ class TrackShipmentRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/track';
+        return '/track/';
     }
 
     protected function defaultBody(): array
