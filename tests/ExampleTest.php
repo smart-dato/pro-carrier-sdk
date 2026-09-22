@@ -1,14 +1,51 @@
 <?php
 
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
 use SmartDato\ProCarrier\Builders\AddressBuilder;
 use SmartDato\ProCarrier\Builders\GroupBuilder;
 use SmartDato\ProCarrier\Builders\ProductBuilder;
 use SmartDato\ProCarrier\Builders\ShipmentBuilder;
 use SmartDato\ProCarrier\Enums\ServiceCode;
 use SmartDato\ProCarrier\ProCarrier;
+use SmartDato\ProCarrier\Requests\CreateParcelGroupRequest;
+use SmartDato\ProCarrier\Requests\OrderShipmentRequest;
 
 beforeEach(function () {
-    $this->service = new ProCarrier('YOUR_API_KEY_HERE', true);
+    MockClient::global([
+        OrderShipmentRequest::class => MockResponse::make([
+            'ErrorLevel' => 0,
+            'Shipment' => [
+                'TrackingNumber' => 'DG32733000013',
+                'ShipperReference' => 'LaravelPlugin - ProCarrier',
+                'DisplayId' => 'PC-0001',
+                'Service' => 'PPTT',
+                'Carrier' => 'Pro Carrier',
+                'CarrierTrackingNumber' => 'CT0000000001',
+                'CarrierTrackingUrl' => 'https://track.example/CT0000000001',
+                'LabelFormat' => 'PDF',
+                'LabelType' => 'System',
+                'LabelImage' => base64_encode('%PDF-1.4 fake label'),
+                'Weight' => 0.413,
+                'WeightUnit' => 'kg',
+            ],
+        ], 200),
+        CreateParcelGroupRequest::class => MockResponse::make([
+            'ErrorLevel' => 0,
+            'Group' => [
+                'CarrierId' => 'GRP-0001',
+                'LabelFormat' => 'PDF',
+                'LabelType' => 'System',
+                'LabelImage' => base64_encode('%PDF-1.4 fake manifest'),
+            ],
+        ], 200),
+    ]);
+
+    $this->service = new ProCarrier('test-api-key', true);
+});
+
+afterEach(function () {
+    MockClient::destroyGlobal();
 });
 
 it('Parcel#1 - Robin Bassford (US)', function () {
@@ -91,11 +128,13 @@ it('Parcel#1 - Robin Bassford (US)', function () {
         ->labelOptions('System', 'PDF')
         ->build();
 
-    $response = $response = $this->service->createShipment($shipment);
+    $response = $this->service->createShipment($shipment);
 
-    ray($response);
-    file_put_contents('label'.now()->format('ymdhis').'.pdf', base64_decode($response->labelImage));
-    expect(true)->toBeTrue();
+    expect($response->isSuccess())->toBeTrue()
+        ->and($response->trackingNumber)->toBe('DG32733000013')
+        ->and($response->carrier)->toBe('Pro Carrier')
+        ->and($response->labelFormat)->toBe('PDF')
+        ->and(base64_decode($response->labelImage))->toStartWith('%PDF');
 });
 
 it('Parcel#2 - Hilton Guam Resort & Spa (Guam)', function () {
@@ -180,7 +219,10 @@ it('Parcel#2 - Hilton Guam Resort & Spa (Guam)', function () {
         ->build();
 
     $response = $this->service->createShipment($shipment);
-    expect(true)->toBeTrue();
+
+    expect($response->isSuccess())->toBeTrue()
+        ->and($response->weight)->toBe(0.413)
+        ->and($response->weightUnit)->toBe('kg');
 });
 
 it('Parcel#3 - Kensington Hotel Saipan (Northern Mariana Islands)', function () {
@@ -264,9 +306,9 @@ it('Parcel#3 - Kensington Hotel Saipan (Northern Mariana Islands)', function () 
         ->build();
 
     $response = $this->service->createShipment($shipment);
-    ray($response);
 
-    expect(true)->toBeTrue();
+    expect($response->isSuccess())->toBeTrue()
+        ->and($response->carrierTrackingNumber)->toBe('CT0000000001');
 });
 
 it('create parel group', function () {
@@ -275,7 +317,8 @@ it('create parel group', function () {
 //        ->addTrackingNumber('DG46666000162')
         ->labelFormat('PDF')
         ->build());
-    ray($response);
 
-    expect(true)->toBeTrue();
+    expect($response->isSuccess())->toBeTrue()
+        ->and($response->carrierId)->toBe('GRP-0001')
+        ->and($response->labelFormat)->toBe('PDF');
 });
