@@ -27,7 +27,7 @@ class ProCarrier
 
     protected string $apiKey;
 
-    public function __construct(?string $apiKey = null, bool $testMode = false, bool $skipTestOption = false)
+    public function __construct(?string $apiKey = null, ?bool $testMode = null, bool $skipTestOption = false)
     {
         $this->apiKey = $apiKey ?? config('pro-carrier-sdk.api_key');
         $this->connector = new ProCarrierConnector(
@@ -180,8 +180,10 @@ class ProCarrier
         try {
             $response = $this->connector->send($request);
             $data = $response->json();
-            if ($response->json('Error') !== null) {
-                throw new ProCarrierException($response->json('Error').' ('.$response->json('ErrorLevel').')');
+            $error = $response->json('Error');
+
+            if (is_string($error) && $error !== '') {
+                throw new ProCarrierException("{$error} ({$response->json('ErrorLevel')})");
             }
 
             return ApiResponseData::fromArray(

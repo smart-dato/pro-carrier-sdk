@@ -30,6 +30,7 @@ php artisan vendor:publish --tag="pro-carrier-sdk-config"
 PRO_CARRIER_API_KEY=your-api-key
 PRO_CARRIER_BASE_URL=https://dgapi.app/API/
 PRO_CARRIER_TIMEOUT=30
+PRO_CARRIER_TEST_MODE=false
 ```
 
 ## Usage
@@ -43,7 +44,7 @@ $proCarrier = new ProCarrier('your-api-key', testMode: true); // or explicitly
 
 The `ProCarrier` facade resolves the same class with the configured API key.
 
-> **Test mode:** pass `testMode: true` to the constructor. The config also defines `PRO_CARRIER_TEST_MODE`, but `ProCarrier` currently always passes its own `testMode` argument to the connector, so that setting has no effect unless you use `ProCarrierConnector` directly.
+Test mode comes from `PRO_CARRIER_TEST_MODE` unless you pass `testMode` to the constructor.
 
 ### Create a shipment
 
